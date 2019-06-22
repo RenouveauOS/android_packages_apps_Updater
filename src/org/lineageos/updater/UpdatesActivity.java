@@ -315,7 +315,11 @@ public class UpdatesActivity extends UpdatesListActivity {
         DownloadClient.DownloadCallback callback = new DownloadClient.DownloadCallback() {
             @Override
             public void onFailure(final boolean cancelled) {
-                Log.e(TAG, "Could not download updates list");
+                if (cancelled) {
+                    Log.e(TAG, "User cancelled downloading updates list");
+                } else {
+                    Log.e(TAG, "Could not download updates list");
+                }
                 runOnUiThread(() -> {
                     if (!cancelled) {
                         showSnackbar(R.string.snack_updates_check_failed, Snackbar.LENGTH_LONG);
